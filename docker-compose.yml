@@ -1,0 +1,28 @@
+version: "3.1"
+
+services:
+
+
+    php-fpm:
+      image: php:fpm-alpine
+      container_name: php-fpm
+      working_dir: /application
+      volumes:
+        - ./application:/application
+        - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini
+        # - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
+
+    webserver:
+      image: httpd:alpine
+      container_name: webserver
+      working_dir: /application
+      volumes:
+        - ./application:/application
+        - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
+        - ./docker/apache2/server.crt:/usr/local/apache2/conf/server.crt
+        - ./docker/apache2/server.key:/usr/local/apache2/conf/server.key
+        - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf
+        # - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+      ports:
+        - "80:80"
+        - "443:443"
