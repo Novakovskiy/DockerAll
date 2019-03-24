@@ -4,7 +4,8 @@ services:
 
 
     php-fpm:
-      image: php:fpm-alpine
+      # build: docker/php-fpm
+      image: interpol/php-fpm
       container_name: php-fpm
       working_dir: /application
       volumes:
