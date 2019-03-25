@@ -46,20 +46,20 @@ services:
   mysql:
     image: mariadb
     restart: always
-    container_name: mysql
+    container_name: mariadb
     working_dir: /mariadb
     volumes:
-      - ./mariadb:/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./docker/mysql/conf.d:/etc/mysql/conf.d
-      - ./docker/mysql/mariadb.cnf:/etc/mysql/mariadb.cnf
-      - ./docker/mysql/mariadb.conf.d:/etc/mysql/mariadb.conf.d
+      - ./mariadb:/var/lib/mysql/
+      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mariadb/conf.d:/etc/mysql/conf.d
+      - ./docker/mariadb/mariadb.cnf:/etc/mysql/mariadb.cnf
+      - ./docker/mariadb/mariadb.conf.d:/etc/mysql/mariadb.conf.d
     environment:
-      - MYSQL_ROOT_PASSWORD = my_pass
-      - MYSQL_DATABASE = my_db
-      # - MYSQL_ALLOW_EMPTY_PASSWORD = yes
-      # - MYSQL_RANDOM_ROOT_PASSWORD = yes
-      # - MYSQL_USER = myuser
-      # - MYSQL_PASSWORD = mypass
+      - MYSQL_ROOT_PASSWORD=my_pass
+      - MYSQL_DATABASE=my_db
+      # - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      # - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      # - MYSQL_USER=my_user
+      # - MYSQL_PASSWORD=my_pass
     ports:
       - "3306:3306"
