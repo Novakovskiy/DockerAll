@@ -5,6 +5,7 @@ services:
   php-fpm:
     # build: docker/php-fpm
     image: interpol/php-fpm
+    restart: always
     container_name: php-fpm
     working_dir: /application
     volumes:
@@ -14,6 +15,7 @@ services:
 
   apache:
     image: httpd:alpine
+    restart: always
     container_name: apache
     working_dir: /application
     volumes:
@@ -27,6 +29,7 @@ services:
 
   nginx:
     image: nginx:alpine
+    restart: always
     container_name: nginx
     working_dir: /application
     volumes:
@@ -39,3 +42,24 @@ services:
       - "443:443"
     depends_on:
       - apache
+
+  mysql:
+    image: mariadb
+    restart: always
+    container_name: mysql
+    working_dir: /mariadb
+    volumes:
+      - ./mariadb:/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+      - ./docker/mysql/mariadb.cnf:/etc/mysql/mariadb.cnf
+      - ./docker/mysql/mariadb.conf.d:/etc/mysql/mariadb.conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD = my_pass
+      - MYSQL_DATABASE = my_db
+      # - MYSQL_ALLOW_EMPTY_PASSWORD = yes
+      # - MYSQL_RANDOM_ROOT_PASSWORD = yes
+      # - MYSQL_USER = myuser
+      # - MYSQL_PASSWORD = mypass
+    ports:
+      - "3306:3306"
