@@ -1,29 +1,40 @@
-version: "3.1"
+version: "3"
 
 services:
 
+  php-fpm:
+    # build: docker/php-fpm
+    image: interpol/php-fpm
+    container_name: php-fpm
+    working_dir: /application
+    volumes:
+      - ./application:/application
+      - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini
+      # - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
 
-    php-fpm:
-      # build: docker/php-fpm
-      image: interpol/php-fpm
-      container_name: php-fpm
-      working_dir: /application
-      volumes:
-        - ./application:/application
-        - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini
-        # - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
+  apache:
+    image: httpd:alpine
+    container_name: apache
+    working_dir: /application
+    volumes:
+      - ./application:/application
+      - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf
+      # - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+    depends_on:
+      - php-fpm
 
-    webserver:
-      image: httpd:alpine
-      container_name: webserver
-      working_dir: /application
-      volumes:
-        - ./application:/application
-        - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
-        - ./docker/apache2/server.crt:/usr/local/apache2/conf/server.crt
-        - ./docker/apache2/server.key:/usr/local/apache2/conf/server.key
-        - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf
-        # - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
-      ports:
-        - "80:80"
-        - "443:443"
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    working_dir: /application
+    volumes:
+      - ./application:/application
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/ssl/server.crt:/ssl/server.crt
+      - ./docker/ssl/server.key:/ssl/server.key
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - apache
