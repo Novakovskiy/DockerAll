@@ -63,3 +63,22 @@ services:
       # - MYSQL_PASSWORD=my_pass
     ports:
       - "3306:3306"
+
+  # mysql:
+  #   image: mysql
+  #   # restart: always
+  #   container_name: mysql
+  #   working_dir: /mysql
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #     - ./docker/mysql:/etc/mysql
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=my_pass
+  #     - MYSQL_DATABASE=my_db
+  #     # - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  #     # - MYSQL_RANDOM_ROOT_PASSWORD=yes
+  #     # - MYSQL_ONETIME_PASSWORD=yes
+  #     # - MYSQL_USER=my_user
+  #     # - MYSQL_PASSWORD=my_pass
+  #   ports:
+  #     - "3306:3306"
