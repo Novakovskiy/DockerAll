@@ -99,3 +99,8 @@ services:
 #       - "5432:5432"
 # volumes:
 #   postgres:
+
+  memcached:
+    image: memcached:alpine
+    container_name: memcached
+    command: memcached -m 64

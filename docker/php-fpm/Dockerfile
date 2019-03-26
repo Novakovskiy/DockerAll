@@ -19,7 +19,10 @@ RUN apk update && \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
     rm -rf /var/cache/apk/*
 
-RUN docker-php-ext-install -j$(nproc) opcache && \
+RUN apk update && \
+    apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
+    libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+    docker-php-ext-install -j$(nproc) opcache && \
     apk add icu-dev && \
     docker-php-ext-install -j$(nproc) intl && \
     apk add postgresql-dev && \
@@ -33,17 +36,23 @@ RUN docker-php-ext-install -j$(nproc) opcache && \
     apk add icu-dev imap-dev openssl-dev && \
     docker-php-ext-configure imap --with-imap --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap && \
+    rm -rf /var/cache/apk/* && \
+    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
+    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
     rm -rf /var/cache/apk/*
     # bz2 calendar ctype
     # dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv interbase ldap
     # oci8 odbc pcntl pdo_dblib pdo_firebird pdo_oci pdo_odbc pspell readline recode reflection
-    # shmop simplexml snmp soap sockets sodium spl sysvmsg sysvsem sysvshm tidy tokenizer wddx xmlrpc xsl zend_test
+    # shmop simplexml snmp soap sockets sodium spl sysvmsg sysvsem sysvshm tidy wddx xmlrpc xsl zend_test
 
 RUN apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
     libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
     pecl install xdebug && \
     docker-php-ext-enable xdebug && \
+    apk add libmemcached-dev cyrus-sasl-dev && \
+    pecl install memcached && \
+    docker-php-ext-enable memcached && \
     apk add libmcrypt-dev && \
     pecl install mcrypt-1.0.2 && \
     docker-php-ext-enable mcrypt && \
