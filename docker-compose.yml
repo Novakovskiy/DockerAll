@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 
 services:
 
@@ -66,7 +66,7 @@ services:
 
   # mysql:
   #   image: mysql
-  #   # restart: always
+  #   restart: always
   #   container_name: mysql
   #   working_dir: /mysql
   #   volumes:
@@ -82,3 +82,20 @@ services:
   #     # - MYSQL_PASSWORD=my_pass
   #   ports:
   #     - "3306:3306"
+
+#   postgres:
+#     image: postgres:alpine
+#     restart: always
+#     container_name: postgres
+#     volumes:
+#       # - postgres:/var/lib/postgresql/data
+#       # Next line uncomment after first start
+#       # - ./docker/postgres/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+#     environment:
+#       - POSTGRES_PASSWORD=my_pass
+#       - POSTGRES_DB=my_db
+#       # - POSTGRES_USER=my_user
+#     ports:
+#       - "5432:5432"
+# volumes:
+#   postgres:
