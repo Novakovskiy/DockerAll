@@ -1,9 +1,7 @@
 FROM php:fpm-alpine
-
 WORKDIR /application
 
 ENV PHALCON_VERSION=3.4.3
-
 RUN apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
     libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
@@ -22,35 +20,9 @@ RUN apk update && \
 RUN apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
     libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
-    docker-php-ext-install -j$(nproc) opcache && \
-    apk add icu-dev && \
-    docker-php-ext-install -j$(nproc) intl && \
-    apk add postgresql-dev && \
-    docker-php-ext-install -j$(nproc) pdo_pgsql && \
-    # docker-php-ext-install -j$(nproc) pgsql
-    docker-php-ext-install -j$(nproc) pdo_mysql && \
-    # docker-php-ext-install -j$(nproc) mysqli && \
-    apk add zlib-dev libzip-dev && \
-    docker-php-ext-install -j$(nproc) zip && \
-    docker-php-ext-install -j$(nproc) bcmath && \
-    apk add icu-dev imap-dev openssl-dev && \
-    docker-php-ext-configure imap --with-imap --with-imap-ssl && \
-    docker-php-ext-install -j$(nproc) imap && \
-    rm -rf /var/cache/apk/* && \
-    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
-    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
-    rm -rf /var/cache/apk/*
-    # bz2 calendar ctype
-    # dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv interbase ldap
-    # oci8 odbc pcntl pdo_dblib pdo_firebird pdo_oci pdo_odbc pspell readline recode reflection
-    # shmop simplexml snmp soap sockets sodium spl sysvmsg sysvsem sysvshm tidy wddx xmlrpc xsl zend_test
-
-RUN apk update && \
-    apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
-    libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
     pecl install xdebug && \
     docker-php-ext-enable xdebug && \
-    apk add libmemcached-dev cyrus-sasl-dev && \
+    apk add zlib-dev libmemcached-dev cyrus-sasl-dev && \
     pecl install memcached && \
     docker-php-ext-enable memcached && \
     apk add libmcrypt-dev && \
@@ -64,3 +36,31 @@ RUN apk update && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
     rm -rf /var/cache/apk/*
+
+RUN apk update && \
+    apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
+    libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+    docker-php-ext-install -j$(nproc) opcache && \
+    apk add icu-dev && \
+    docker-php-ext-install -j$(nproc) intl && \
+    apk add postgresql-dev && \
+    docker-php-ext-install -j$(nproc) pdo_pgsql && \
+    # docker-php-ext-install -j$(nproc) pgsql
+    docker-php-ext-install -j$(nproc) pdo_mysql && \
+    # docker-php-ext-install -j$(nproc) mysqli && \
+    apk add libzip-dev && \
+    docker-php-ext-install -j$(nproc) zip && \
+    docker-php-ext-install -j$(nproc) bcmath && \
+    apk add icu-dev imap-dev openssl-dev && \
+    docker-php-ext-configure imap --with-imap --with-imap-ssl && \
+    docker-php-ext-install -j$(nproc) imap && \
+    apk add libpng-dev && \
+    docker-php-ext-install -j$(nproc) gd && \
+    rm -rf /var/cache/apk/* && \
+    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
+    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
+    rm -rf /var/cache/apk/*
+    # bz2 calendar ctype
+    # dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv interbase ldap
+    # oci8 odbc pcntl pdo_dblib pdo_firebird pdo_oci pdo_odbc pspell readline recode reflection
+    # shmop simplexml snmp soap sockets sodium spl sysvmsg sysvsem sysvshm tidy wddx xmlrpc xsl zend_test
