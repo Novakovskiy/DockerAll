@@ -40,6 +40,9 @@ RUN apk update && \
 RUN apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
     libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+    apk add freetype-dev libjpeg-turbo-dev libpng-dev && \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
+    docker-php-ext-install -j$(nproc) gd && \
     docker-php-ext-install -j$(nproc) opcache && \
     apk add icu-dev && \
     docker-php-ext-install -j$(nproc) intl && \
@@ -54,8 +57,6 @@ RUN apk update && \
     apk add icu-dev imap-dev openssl-dev && \
     docker-php-ext-configure imap --with-imap --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap && \
-    apk add libpng-dev && \
-    docker-php-ext-install -j$(nproc) gd && \
     rm -rf /var/cache/apk/* && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
