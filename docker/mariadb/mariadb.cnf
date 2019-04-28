@@ -17,3 +17,10 @@ character_set_server   = utf8
 collation_server       = utf8_general_ci
 # Import all .cnf files from configuration directory
 !includedir /etc/mysql/mariadb.conf.d/
+
+default-storage-engine = myisam
+default-tmp-storage-engine = myisam
+skip-innodb
+
+[mariadb]
+plugin-load = ha_archive
