@@ -46,6 +46,8 @@ RUN apk update && \
     docker-php-ext-install -j$(nproc) opcache && \
     apk add icu-dev && \
     docker-php-ext-install -j$(nproc) intl && \
+    apk add gettext-dev && \
+    docker-php-ext-install -j$(nproc) gettext && \
     apk add postgresql-dev && \
     docker-php-ext-install -j$(nproc) pdo_pgsql && \
     docker-php-ext-install -j$(nproc) pgsql && \
@@ -54,7 +56,7 @@ RUN apk update && \
     apk add libzip-dev && \
     docker-php-ext-install -j$(nproc) zip && \
     docker-php-ext-install -j$(nproc) bcmath && \
-    apk add icu-dev imap-dev openssl-dev && \
+    apk add imap-dev openssl-dev && \
     docker-php-ext-configure imap --with-imap --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap && \
     rm -rf /var/cache/apk/* && \
@@ -62,6 +64,6 @@ RUN apk update && \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
     rm -rf /var/cache/apk/*
     # bz2 calendar ctype
-    # dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv interbase ldap
+    # dba dom enchant exif fileinfo filter ftp gd gmp hash iconv interbase ldap
     # oci8 odbc pcntl pdo_dblib pdo_firebird pdo_oci pdo_odbc pspell readline recode reflection
     # shmop simplexml snmp soap sockets sodium spl sysvmsg sysvsem sysvshm tidy wddx xmlrpc xsl zend_test
