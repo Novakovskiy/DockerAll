@@ -1,3 +1,4 @@
 .vscode/
-/mariadb/
-/mysql/
+.idea/
+docker/mariadb/data/
+docker/mysql/data/

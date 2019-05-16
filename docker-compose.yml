@@ -1,9 +1,12 @@
 version: "3.2"
 
+#volumes:
+#  postgres:
+
 services:
 
   php-fpm:
-    # build: docker/php-fpm
+    build: docker/php-fpm
     image: interpol/php-fpm
     restart: always
     container_name: php-fpm
@@ -11,7 +14,7 @@ services:
     volumes:
       - ./application:/application
       - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini
-      # - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
+#      - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
 
   apache:
     image: httpd:alpine
@@ -23,7 +26,7 @@ services:
       - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
       - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf
       - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf
-      # - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+#      - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     depends_on:
       - php-fpm
 
@@ -43,71 +46,85 @@ services:
     depends_on:
       - apache
 
-  mysql:
-    image: mariadb
-    restart: always
-    container_name: mariadb
-    working_dir: /mariadb
-    volumes:
-      - ./mariadb:/var/lib/mysql/
-      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf
-      - ./docker/mariadb/conf.d:/etc/mysql/conf.d
-      - ./docker/mariadb/mariadb.cnf:/etc/mysql/mariadb.cnf
-      - ./docker/mariadb/mariadb.conf.d:/etc/mysql/mariadb.conf.d
-    environment:
-      - MYSQL_ROOT_PASSWORD=my_pass
-      - MYSQL_DATABASE=my_db
-      # - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      # - MYSQL_RANDOM_ROOT_PASSWORD=yes
-      # - MYSQL_USER=my_user
-      # - MYSQL_PASSWORD=my_pass
-    ports:
-      - "3306:3306"
+#  mysql:
+#    image: mariadb
+#    restart: always
+#    container_name: mariadb
+#    working_dir: /mariadb
+#    volumes:
+#      - ./docker/mariadb/data:/var/lib/mysql/
+#      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mariadb/conf.d:/etc/mysql/conf.d
+#      - ./docker/mariadb/mariadb.cnf:/etc/mysql/mariadb.cnf
+#      - ./docker/mariadb/mariadb.conf.d:/etc/mysql/mariadb.conf.d
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=my_pass
+#      - MYSQL_DATABASE=my_db
+##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+##      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+##      - MYSQL_USER=my_user
+##      - MYSQL_PASSWORD=my_pass
+#    ports:
+#      - "3306:3306"
 
-  # mysql:
-  #   image: mysql
-  #   restart: always
-  #   container_name: mysql
-  #   working_dir: /mysql
-  #   volumes:
-  #     - ./mysql:/var/lib/mysql
-  #     - ./docker/mysql:/etc/mysql
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=my_pass
-  #     - MYSQL_DATABASE=my_db
-  #     # - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-  #     # - MYSQL_RANDOM_ROOT_PASSWORD=yes
-  #     # - MYSQL_ONETIME_PASSWORD=yes
-  #     # - MYSQL_USER=my_user
-  #     # - MYSQL_PASSWORD=my_pass
-  #   ports:
-  #     - "3306:3306"
+#  mysql:
+#    image: mysql
+#    restart: always
+#    container_name: mysql
+#    working_dir: /mysql
+#    volumes:
+#      - ./docker/mysql/data:/var/lib/mysql
+#      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql/my.cnf.fallback:/etc/mysql/my.cnf.fallback
+#      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=my_pass
+#      - MYSQL_DATABASE=my_db
+##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+##      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+##      - MYSQL_ONETIME_PASSWORD=yes
+##      - MYSQL_USER=my_user
+##      - MYSQL_PASSWORD=my_pass
+#    ports:
+#      - "3306:3306"
 
-#   postgres:
-#     image: postgres:alpine
-#     restart: always
-#     container_name: postgres
-#     volumes:
-#       # - postgres:/var/lib/postgresql/data
-#       # Next line uncomment after first start
-#       # - ./docker/postgres/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
-#     environment:
-#       - POSTGRES_PASSWORD=my_pass
-#       - POSTGRES_DB=my_db
-#       # - POSTGRES_USER=my_user
-#     ports:
-#       - "5432:5432"
-# volumes:
-#   postgres:
+#  postgres:
+#    image: postgres:alpine
+#    restart: always
+#    container_name: postgres
+#    volumes:
+#      - postgres:/var/lib/postgresql/data
+#      # Next line uncomment after first start
+##      - ./docker/postgres/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+#    environment:
+#      - POSTGRES_PASSWORD=my_pass
+#      - POSTGRES_DB=my_db
+##      - POSTGRES_USER=my_user
+#    ports:
+#      - "5432:5432"
 
-  memcached:
-    image: memcached:alpine
-    container_name: memcached
-    command: memcached -m 64
+#  mongo:
+#    image: mongo
+#    container_name: mongo
+##    environment:
+##      - MONGO_INITDB_ROOT_USERNAME=mongo
+##      - MONGO_INITDB_ROOT_PASSWORD=my_pass
+##      - MONGO_INITDB_DATABASE=my_db
+#    ports:
+#      - "27017:27017"
 
-  mailhog:
-    image: mailhog/mailhog:latest
-    container_name: mailhog
-    ports:
-      - "8025:8025"
-  # SMTP server starts on port 1025
+#  memcached:
+#    image: memcached:alpine
+#    container_name: memcached
+#    command: memcached -m 64
+
+#  redis:
+#    image: redis:alpine
+#    container_name: redis
+
+#  mailhog:
+#    image: mailhog/mailhog:latest
+#    container_name: mailhog
+#    ports:
+#      - "8025:8025"
+#  # SMTP server starts on port 1025
