@@ -6,7 +6,7 @@ version: "3.2"
 services:
 
   php-fpm:
-    build: docker/php-fpm
+#    build: docker/php-fpm
     image: interpol/php-fpm
     restart: always
     container_name: php-fpm
