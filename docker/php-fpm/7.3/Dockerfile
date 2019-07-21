@@ -2,9 +2,11 @@ FROM php:7.3-fpm-alpine
 WORKDIR /application
 
 ENV PHALCON_VERSION=3.4.3
-RUN apk update && \
+RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
+    apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
     libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+    echo "Install Phalcon ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     set -xe && \
     curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz && \
     tar xzf v${PHALCON_VERSION}.tar.gz && \
@@ -13,13 +15,7 @@ RUN apk update && \
     echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini && \
     cd ../.. && \
     rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION} && \
-    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
-    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
-    rm -rf /var/cache/apk/*
-
-RUN apk update && \
-    apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
-    libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+    echo "Install PECL extention +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     pecl install xdebug && \
     docker-php-ext-enable xdebug && \
     apk add zlib-dev libmemcached-dev cyrus-sasl-dev && \
@@ -33,13 +29,7 @@ RUN apk update && \
     pecl install redis && \
     docker-php-ext-enable redis && \
     pecl clear-cache && \
-    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
-    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
-    rm -rf /var/cache/apk/*
-
-RUN apk update && \
-    apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
-    libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+    echo "Install extention ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk add freetype-dev libjpeg-turbo-dev libpng-dev && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
@@ -59,7 +49,7 @@ RUN apk update && \
     apk add imap-dev openssl-dev && \
     docker-php-ext-configure imap --with-imap --with-imap-ssl && \
     docker-php-ext-install -j$(nproc) imap && \
-    rm -rf /var/cache/apk/* && \
+    echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
     rm -rf /var/cache/apk/*
