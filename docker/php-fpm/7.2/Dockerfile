@@ -51,7 +51,8 @@ RUN apk update && \
     rm -rf /var/cache/apk/* && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* && \
+    echo "Install end +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     # bz2 calendar ctype
     # dba dom enchant exif fileinfo filter ftp gd gmp hash iconv interbase ldap
     # oci8 odbc pcntl pdo_dblib pdo_firebird pdo_oci pdo_odbc pspell readline recode reflection
