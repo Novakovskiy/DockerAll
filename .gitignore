@@ -2,3 +2,5 @@
 .idea/
 docker/mariadb/data/
 docker/mysql/data/
+docker/pgadmin/
+docker/mssql/

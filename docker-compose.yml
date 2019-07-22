@@ -1,12 +1,12 @@
 version: "3.2"
 
 #volumes:
-#  postgres:
+#  postgres_data:
+#  postgres_pgadmin:
 
 services:
 
   php-fpm:
-#    build: docker/php-fpm
     image: interpol/php-fpm
     restart: always
     container_name: php-fpm
@@ -50,7 +50,6 @@ services:
 #    image: mariadb
 #    restart: always
 #    container_name: mariadb
-#    working_dir: /mariadb
 #    volumes:
 #      - ./docker/mariadb/data:/var/lib/mysql/
 #      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf
@@ -58,7 +57,7 @@ services:
 #      - ./docker/mariadb/mariadb.cnf:/etc/mysql/mariadb.cnf
 #      - ./docker/mariadb/mariadb.conf.d:/etc/mysql/mariadb.conf.d
 #    environment:
-#      - MYSQL_ROOT_PASSWORD=my_pass
+#      - MYSQL_ROOT_PASSWORD=Asdf1234
 #      - MYSQL_DATABASE=my_db
 ##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 ##      - MYSQL_RANDOM_ROOT_PASSWORD=yes
@@ -67,18 +66,30 @@ services:
 #    ports:
 #      - "3306:3306"
 
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    restart: always
+#    container_name: phpmyadmin
+#    environment:
+#      - PMA_HOST=mysql
+#      - PMA_PORT=3306
+#      - MYSQL_ROOT_PASSWORD=Asdf1234
+##      - MYSQL_USER=my_user
+##      - MYSQL_PASSWORD=my_pass
+#    ports:
+#      - "8080:80"
+
 #  mysql:
 #    image: mysql
 #    restart: always
 #    container_name: mysql
-#    working_dir: /mysql
 #    volumes:
 #      - ./docker/mysql/data:/var/lib/mysql
 #      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
 #      - ./docker/mysql/my.cnf.fallback:/etc/mysql/my.cnf.fallback
 #      - ./docker/mysql/conf.d:/etc/mysql/conf.d
 #    environment:
-#      - MYSQL_ROOT_PASSWORD=my_pass
+#      - MYSQL_ROOT_PASSWORD=Asdf1234
 #      - MYSQL_DATABASE=my_db
 ##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 ##      - MYSQL_RANDOM_ROOT_PASSWORD=yes
@@ -93,22 +104,59 @@ services:
 #    restart: always
 #    container_name: postgres
 #    volumes:
-#      - postgres:/var/lib/postgresql/data
-#      # Next line uncomment after first start
+#      - postgres_data:/var/lib/postgresql/data
+#      # Next line uncomment after first start if needed
 ##      - ./docker/postgres/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
 #    environment:
-#      - POSTGRES_PASSWORD=my_pass
-#      - POSTGRES_DB=my_db
-##      - POSTGRES_USER=my_user
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=Asdf1234
+#      - POSTGRES_DB=postgres
 #    ports:
 #      - "5432:5432"
+
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    restart: always
+#    container_name: pgadmin
+#    volumes:
+#      - postgres_pgadmin:/var/lib/pgadmin
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=dev@localhost
+#      - PGADMIN_DEFAULT_PASSWORD=Asdf1234
+#    ports:
+#      - "8080:80"
+
+#  mssql:
+#    image: mcr.microsoft.com/mssql/server
+#    restart: always
+#    container_name: mssql
+#    volumes:
+#      - ./docker/mssql/data:/var/opt/mssql/data
+#      - ./docker/mssql/log:/var/opt/mssql/log
+#    environment:
+#      - ACCEPT_EULA=Y
+#      - SA_PASSWORD=Asdf1234
+#      - MSSQL_PID=Developer
+#    ports:
+##      - "135:135"
+#      - "1433:1433"
+##      - "1434:1434"
+##      - "2382:2382"
+##      - "2383:2383"
+##      - "4022:4022"
+##      - "7022:7022"
+
+#  mssql-tools:
+#    image: mcr.microsoft.com/mssql-tools
+#    restart: always
+#    container_name: mssql-tools
 
 #  mongo:
 #    image: mongo
 #    container_name: mongo
 ##    environment:
 ##      - MONGO_INITDB_ROOT_USERNAME=mongo
-##      - MONGO_INITDB_ROOT_PASSWORD=my_pass
+##      - MONGO_INITDB_ROOT_PASSWORD=Asdf1234
 ##      - MONGO_INITDB_DATABASE=my_db
 #    ports:
 #      - "27017:27017"
