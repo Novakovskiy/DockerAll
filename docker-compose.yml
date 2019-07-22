@@ -58,9 +58,9 @@ services:
 #      - ./docker/mariadb/mariadb.conf.d:/etc/mysql/mariadb.conf.d
 #    environment:
 #      - MYSQL_ROOT_PASSWORD=Asdf1234
-#      - MYSQL_DATABASE=my_db
 ##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 ##      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+##      - MYSQL_DATABASE=my_db
 ##      - MYSQL_USER=my_user
 ##      - MYSQL_PASSWORD=my_pass
 #    ports:
@@ -90,10 +90,10 @@ services:
 #      - ./docker/mysql/conf.d:/etc/mysql/conf.d
 #    environment:
 #      - MYSQL_ROOT_PASSWORD=Asdf1234
-#      - MYSQL_DATABASE=my_db
 ##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 ##      - MYSQL_RANDOM_ROOT_PASSWORD=yes
 ##      - MYSQL_ONETIME_PASSWORD=yes
+##      - MYSQL_DATABASE=my_db
 ##      - MYSQL_USER=my_user
 ##      - MYSQL_PASSWORD=my_pass
 #    ports:
@@ -154,9 +154,9 @@ services:
 #  mongo:
 #    image: mongo
 #    container_name: mongo
-##    environment:
-##      - MONGO_INITDB_ROOT_USERNAME=mongo
-##      - MONGO_INITDB_ROOT_PASSWORD=Asdf1234
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=mongo
+#      - MONGO_INITDB_ROOT_PASSWORD=Asdf1234
 ##      - MONGO_INITDB_DATABASE=my_db
 #    ports:
 #      - "27017:27017"
