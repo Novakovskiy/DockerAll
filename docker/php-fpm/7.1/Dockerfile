@@ -21,7 +21,7 @@ RUN apk update && \
     pecl install memcached && \
     docker-php-ext-enable memcached && \
     apk add libmcrypt-dev && \
-    pecl install mcrypt-1.0.0 && \
+    pecl install mcrypt && \
     docker-php-ext-enable mcrypt && \
     pecl install mongodb && \
     docker-php-ext-enable mongodb && \
