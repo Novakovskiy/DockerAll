@@ -1,7 +1,7 @@
 FROM php:7.1-fpm-alpine
 WORKDIR /application
 
-ENV PHALCON_VERSION=3.4.4
+ENV PHALCON_VERSION=3.4.5
 RUN apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
     libatomic mpfr3 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
