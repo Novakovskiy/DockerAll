@@ -15,6 +15,8 @@ RUN apk update && \
     cd ../.. && \
     rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION} && \
     echo "Install PECL extention +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
+    pecl install xdebug-2.5.5 && \
+    docker-php-ext-enable xdebug && \
     apk add zlib-dev libmemcached-dev cyrus-sasl-dev && \
     pecl install memcached-2.2.0 && \
     docker-php-ext-enable memcached && \
