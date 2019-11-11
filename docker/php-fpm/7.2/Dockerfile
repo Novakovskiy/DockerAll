@@ -44,6 +44,9 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     docker-php-ext-enable sqlsrv && \
     pecl install pdo_sqlsrv && \
     docker-php-ext-enable pdo_sqlsrv && \
+    apk add imagemagick-dev && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick && \
     pecl clear-cache && \
     echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
