@@ -73,11 +73,12 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     docker-php-ext-install -j$(nproc) intl && \
     apk add gettext-dev && \
     docker-php-ext-install -j$(nproc) gettext && \
-    apk add freetype-dev libjpeg-turbo-dev libpng-dev && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
+    apk add freetype-dev libjpeg-turbo-dev libpng-dev libwebp-dev && \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
-    apk add imap-dev openssl-dev && \
-    docker-php-ext-configure imap --with-imap --with-imap-ssl && \
+    apk add imap-dev openssl-dev krb5-dev && \
+    PHP_OPENSSL=yes docker-php-ext-configure imap --with-imap --with-imap-ssl --with-kerberos && \
     docker-php-ext-install -j$(nproc) imap && \
     docker-php-ext-install -j$(nproc) calendar && \
     docker-php-ext-install -j$(nproc) exif && \
