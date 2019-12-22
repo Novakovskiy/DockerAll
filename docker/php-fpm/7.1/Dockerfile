@@ -1,7 +1,7 @@
 FROM php:7.1-fpm-alpine
 WORKDIR /application
 
-ENV PHALCON_VERSION=4.0.0
+ENV PHALCON_VERSION=3.4.5
 RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk update && \
     apk add musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
