@@ -40,9 +40,9 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     pecl install redis && \
     docker-php-ext-enable redis && \
     apk add --no-cache unixodbc-dev && \
-    pecl install sqlsrv && \
+    pecl install sqlsrv-5.6.1 && \
     docker-php-ext-enable sqlsrv && \
-    pecl install pdo_sqlsrv && \
+    pecl install pdo_sqlsrv-5.6.1 && \
     docker-php-ext-enable pdo_sqlsrv && \
     apk add --no-cache imagemagick-dev && \
     pecl install imagick && \
