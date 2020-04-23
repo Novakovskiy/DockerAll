@@ -94,3 +94,5 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr3 isl gmp && \
     rm -rf /var/cache/apk/*
+
+COPY ./php.ini /usr/local/etc/php/php.ini

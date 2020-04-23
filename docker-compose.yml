@@ -7,12 +7,13 @@ version: "3.2"
 services:
 
   php-fpm:
-    image: interpol/php-fpm
+    image: interpol/php-fpm:7.4
     restart: always
     container_name: php-fpm
     working_dir: /application
     volumes:
       - ./application:/application
+      - ./docker/php-fpm/logs:/logs
       - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini
 #      - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
 
@@ -23,13 +24,18 @@ services:
     working_dir: /application
     volumes:
       - ./application:/application
+      - ./docker/apache2/logs:/logs
       - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/apache2/extra/httpd-logs.conf:/usr/local/apache2/conf/extra/httpd-logs.conf
       - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf
-      - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf
       - ./docker/apache2/extra/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
       - ./docker/ssl/server.crt:/ssl/server.crt
       - ./docker/ssl/server.key:/ssl/server.key
 #      - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+#      - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf # Server status /server-status and server info /server-info
+#    ports:
+#      - "80:80"
+#      - "443:443"
     depends_on:
       - php-fpm
 
@@ -40,6 +46,7 @@ services:
     working_dir: /application
     volumes:
       - ./application:/application
+      - ./docker/nginx/logs:/logs
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./docker/ssl/server.crt:/ssl/server.crt
       - ./docker/ssl/server.key:/ssl/server.key

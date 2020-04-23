@@ -4,4 +4,3 @@ docker/mariadb/data/
 docker/mysql/data/
 docker/pgadmin/
 docker/mssql/
-docker/php-fpm/php-tags.json
