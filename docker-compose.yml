@@ -11,28 +11,30 @@ services:
     restart: always
     container_name: php-fpm
     working_dir: /application
+    env_file: .env
     volumes:
-      - ./application:/application
+      - ./application:${APP_PATH}
       - ./docker/php-fpm/logs:/logs
-      - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini
-#      - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini
+      - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini:ro
+#      - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini:ro
 
   apache:
     image: httpd:alpine
     restart: always
     container_name: apache
     working_dir: /application
+    env_file: .env
     volumes:
-      - ./application:/application
+      - ./application:${APP_PATH}
       - ./docker/apache2/logs:/logs
-      - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./docker/apache2/extra/httpd-logs.conf:/usr/local/apache2/conf/extra/httpd-logs.conf
-      - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf
-      - ./docker/apache2/extra/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
-      - ./docker/ssl/server.crt:/ssl/server.crt
-      - ./docker/ssl/server.key:/ssl/server.key
-#      - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
-#      - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf # Server status /server-status and server info /server-info
+      - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+      - ./docker/apache2/extra/httpd-logs.conf:/usr/local/apache2/conf/extra/httpd-logs.conf:ro
+      - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf:ro
+      - ./docker/apache2/extra/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf:ro
+      - ./docker/ssl/server.crt:/ssl/server.crt:ro
+      - ./docker/ssl/server.key:/ssl/server.key:ro
+#      - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro
+#      - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf:ro # Server status /server-status and server info /server-info
 #    ports:
 #      - "80:80"
 #      - "443:443"
@@ -44,12 +46,13 @@ services:
     restart: always
     container_name: nginx
     working_dir: /application
+    env_file: .env
     volumes:
-      - ./application:/application
+      - ./application:${APP_PATH}
       - ./docker/nginx/logs:/logs
-      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/ssl/server.crt:/ssl/server.crt
-      - ./docker/ssl/server.key:/ssl/server.key
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/ssl/server.crt:/ssl/server.crt:ro
+      - ./docker/ssl/server.key:/ssl/server.key:ro
     ports:
       - "80:80"
       - "443:443"
