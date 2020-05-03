@@ -1,6 +1,9 @@
 # Official images PHP-FPM Alpine with extensions
 
 - Phalcon framework
+- Swoole framework
+
+
 - PSR, Xdebug, Opcache
 - Memcached, Redis
 - PostgeSQL, PDO PostgeSQL, MySQLi, PDO MySQL, MongoDB, SQL Server, PDO SQL Server
