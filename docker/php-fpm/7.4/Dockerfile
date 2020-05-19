@@ -62,9 +62,9 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     pecl install redis && \
     docker-php-ext-enable redis && \
     apk add --no-cache unixodbc-dev && \
-    pecl install sqlsrv-5.7.1preview && \
+    pecl install sqlsrv && \
     docker-php-ext-enable sqlsrv && \
-    pecl install pdo_sqlsrv-5.7.1preview && \
+    pecl install pdo_sqlsrv && \
     docker-php-ext-enable pdo_sqlsrv && \
     apk add --no-cache imagemagick-dev && \
     pecl install imagick && \
@@ -75,7 +75,7 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr4 isl gmp && \
     rm -rf /var/cache/apk/*
 
-ENV PHALCON_VERSION=4.0.5
+ENV PHALCON_VERSION=4.0.6
 RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk update && \
     apk add --no-cache musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
