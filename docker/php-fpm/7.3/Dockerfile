@@ -70,13 +70,17 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     apk add --no-cache imagemagick-dev && \
     pecl install imagick && \
     docker-php-ext-enable imagick && \
+    pecl install swoole && \
+    docker-php-ext-enable swoole && \
+#    pecl install phalcon && \
+#    docker-php-ext-enable phalcon && \
     pecl clear-cache && \
     echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr4 isl gmp && \
     rm -rf /var/cache/apk/*
 
-ENV PHALCON_VERSION=4.0.6
+ENV PHALCON_VERSION=4.1.0
 RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk update && \
     apk add --no-cache musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
@@ -93,19 +97,6 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr4 isl gmp && \
-    rm -rf /var/cache/apk/*
-
-RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
-    apk update && \
-    apk add --no-cache musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc binutils gmp isl libgomp \
-    libatomic mpfr4 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
-    echo "Install Swoole +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
-    pecl install swoole && \
-    docker-php-ext-enable swoole && \
-    pecl clear-cache && \
-    echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
-    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
-    re2c libbz2 libmagic libgcc mpc1 mpfr4 isl gmp && \
     rm -rf /var/cache/apk/*
 
 COPY ./php.ini /usr/local/etc/php/php.ini

@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine
+FROM php:8.0-fpm-alpine
 WORKDIR /application
 
 RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
@@ -22,8 +22,7 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     apk add --no-cache gettext-dev && \
     docker-php-ext-install -j$(nproc) gettext && \
     apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev libwebp-dev && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ --with-webp-dir=/usr/include/ && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install -j$(nproc) gd && \
     apk add --no-cache imap-dev openssl-dev krb5-dev && \
     PHP_OPENSSL=yes docker-php-ext-configure imap --with-imap --with-imap-ssl --with-kerberos && \
@@ -35,7 +34,7 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     apk add --no-cache libxml2-dev && \
     docker-php-ext-install -j$(nproc) soap && \
     docker-php-ext-install -j$(nproc) sockets && \
-    docker-php-ext-install -j$(nproc) xmlrpc && \
+#    docker-php-ext-install -j$(nproc) xmlrpc && \
     apk add --no-cache tidyhtml-dev && \
     docker-php-ext-install -j$(nproc) tidy && \
     echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
@@ -63,13 +62,13 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     pecl install redis && \
     docker-php-ext-enable redis && \
     apk add --no-cache unixodbc-dev && \
-    pecl install sqlsrv && \
-    docker-php-ext-enable sqlsrv && \
-    pecl install pdo_sqlsrv && \
-    docker-php-ext-enable pdo_sqlsrv && \
-    apk add --no-cache imagemagick-dev && \
-    pecl install imagick && \
-    docker-php-ext-enable imagick && \
+#    pecl install sqlsrv && \
+#    docker-php-ext-enable sqlsrv && \
+#    pecl install pdo_sqlsrv && \
+#    docker-php-ext-enable pdo_sqlsrv && \
+#    apk add --no-cache imagemagick-dev && \
+#    pecl install imagick && \
+#    docker-php-ext-enable imagick && \
     pecl install swoole && \
     docker-php-ext-enable swoole && \
 #    pecl install phalcon && \
