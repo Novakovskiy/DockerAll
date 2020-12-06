@@ -1,0 +1,1 @@
+docker build -t interpol/php-fpm:7.4 .

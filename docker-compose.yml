@@ -19,28 +19,28 @@ services:
       - ./docker/php-fpm/php.ini-development:/usr/local/etc/php/php.ini:ro
 #      - ./docker/php-fpm/php.ini-production:/usr/local/etc/php/php.ini:ro
 
-  apache:
-    image: httpd:alpine
-    restart: always
-    container_name: apache
-    working_dir: /application
-    env_file: .env
-    volumes:
-      - ./application:${APP_PATH}
-      - ./docker/apache2/logs:/logs
-      - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
-      - ./docker/apache2/extra/httpd-logs.conf:/usr/local/apache2/conf/extra/httpd-logs.conf:ro
-      - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf:ro
-      - ./docker/apache2/extra/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf:ro
-      - ./docker/ssl/server.crt:/ssl/server.crt:ro
-      - ./docker/ssl/server.key:/ssl/server.key:ro
-#      - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro
-#      - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf:ro # Server status /server-status and server info /server-info
-#    ports:
-#      - "80:80"
-#      - "443:443"
-    depends_on:
-      - php-fpm
+#  apache:
+#    image: httpd:alpine
+#    restart: always
+#    container_name: apache
+#    working_dir: /application
+#    env_file: .env
+#    volumes:
+#      - ./application:${APP_PATH}
+#      - ./docker/apache2/logs:/logs
+#      - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+#      - ./docker/apache2/extra/httpd-logs.conf:/usr/local/apache2/conf/extra/httpd-logs.conf:ro
+#      - ./docker/apache2/extra/httpd-php.conf:/usr/local/apache2/conf/extra/httpd-php.conf:ro
+#      - ./docker/apache2/extra/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf:ro
+#      - ./docker/ssl/server.crt:/ssl/server.crt:ro
+#      - ./docker/ssl/server.key:/ssl/server.key:ro
+##      - ./docker/apache2/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro
+##      - ./docker/apache2/extra/httpd-info.conf:/usr/local/apache2/conf/extra/httpd-info.conf:ro # Server status /server-status and server info /server-info
+##    ports:
+##      - "80:80"
+##      - "443:443"
+#    depends_on:
+#      - php-fpm
 
   nginx:
     image: nginx:alpine
@@ -58,18 +58,21 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - apache
+      - php-fpm
 
 #  mysql:
-#    image: mariadb
+#    image: mariadb:10.5
 #    restart: always
-#    container_name: mariadb
+#    container_name: mysql
 #    volumes:
-#      - ./docker/mariadb/data:/var/lib/mysql/
-#      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf
-#      - ./docker/mariadb/conf.d:/etc/mysql/conf.d
-#      - ./docker/mariadb/mariadb.cnf:/etc/mysql/mariadb.cnf
-#      - ./docker/mariadb/mariadb.conf.d:/etc/mysql/mariadb.conf.d
+#      - ./docker/mariadb/data:/var/lib/mysql
+#      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf.my:ro
+#    command: >
+#      bash -c "
+#      cp /etc/mysql/my.cnf.my /etc/mysql/my.cnf
+#      && chmod 644 /etc/mysql/my.cnf
+#      && /entrypoint.sh mysqld
+#      "
 #    environment:
 #      - MYSQL_ROOT_PASSWORD=Asdf1234
 ##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
@@ -94,14 +97,18 @@ services:
 #      - "8080:80"
 
 #  mysql:
-#    image: mysql
+#    image: mysql:8.0
 #    restart: always
 #    container_name: mysql
 #    volumes:
 #      - ./docker/mysql/data:/var/lib/mysql
-#      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-#      - ./docker/mysql/my.cnf.fallback:/etc/mysql/my.cnf.fallback
-#      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+#      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf.my:ro
+#    command: >
+#      bash -c "
+#      cp /etc/mysql/my.cnf.my /etc/mysql/my.cnf
+#      && chmod 644 /etc/mysql/my.cnf
+#      && /entrypoint.sh mysqld
+#      "
 #    environment:
 #      - MYSQL_ROOT_PASSWORD=Asdf1234
 ##      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
