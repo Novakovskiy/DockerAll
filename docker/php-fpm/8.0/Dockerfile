@@ -34,7 +34,6 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     apk add --no-cache libxml2-dev && \
     docker-php-ext-install -j$(nproc) soap && \
     docker-php-ext-install -j$(nproc) sockets && \
-#    docker-php-ext-install -j$(nproc) xmlrpc && \
     apk add --no-cache tidyhtml-dev && \
     docker-php-ext-install -j$(nproc) tidy && \
     echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
@@ -62,40 +61,40 @@ RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++
     pecl install redis && \
     docker-php-ext-enable redis && \
     apk add --no-cache unixodbc-dev && \
-#    pecl install sqlsrv && \
-#    docker-php-ext-enable sqlsrv && \
-#    pecl install pdo_sqlsrv && \
-#    docker-php-ext-enable pdo_sqlsrv && \
-#    apk add --no-cache imagemagick-dev && \
-#    pecl install imagick && \
-#    docker-php-ext-enable imagick && \
     pecl install swoole && \
     docker-php-ext-enable swoole && \
-#    pecl install phalcon && \
-#    docker-php-ext-enable phalcon && \
+    pecl install sqlsrv && \
+    docker-php-ext-enable sqlsrv && \
+    pecl install pdo_sqlsrv && \
+    docker-php-ext-enable pdo_sqlsrv && \
+#RUN    apk add --no-cache imagemagick-dev && \
+#    pecl install imagick && \
+#    docker-php-ext-enable imagick && \
+#    pecl install xmlrpc && \
+#    docker-php-ext-enable xmlrpc && \
     pecl clear-cache && \
     echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
     apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
     re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr4 isl gmp && \
     rm -rf /var/cache/apk/*
 
-ENV PHALCON_VERSION=4.1.0
-RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
-    apk update && \
-    apk add --no-cache musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
-    libatomic mpfr4 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
-    echo "Install Phalcon ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
-    set -xe && \
-    curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz && \
-    tar xzf v${PHALCON_VERSION}.tar.gz && \
-    cd cphalcon-${PHALCON_VERSION}/build && \
-    sh install && \
-    echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini && \
-    cd ../.. && \
-    rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION} && \
-    echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
-    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
-    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr4 isl gmp && \
-    rm -rf /var/cache/apk/*
+#ENV PHALCON_VERSION=4.1.0
+#RUN echo "Install packages +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
+#    apk update && \
+#    apk add --no-cache musl m4 libbz2 perl autoconf pkgconf dpkg-dev dpkg libmagic file libgcc libstdc++ binutils gmp isl libgomp \
+#    libatomic mpfr4 mpc1 gcc musl-dev libc-dev g++ make re2c musl-utils && \
+#    echo "Install Phalcon ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
+#    set -xe && \
+#    curl -LO https://github.com/phalcon/cphalcon/archive/${PHALCON_VERSION}.tar.gz && \
+#    tar xzf v${PHALCON_VERSION}.tar.gz && \
+#    cd cphalcon-${PHALCON_VERSION}/build && \
+#    sh install && \
+#    echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini && \
+#    cd ../.. && \
+#    rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION} && \
+#    echo "Remove packages ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" && \
+#    apk del autoconf m4 dpkg-dev perl dpkg file g++ gcc binutils libatomic libgomp libc-dev musl-dev make pkgconf \
+#    re2c libbz2 libmagic libstdc++ libgcc mpc1 mpfr4 isl gmp && \
+#    rm -rf /var/cache/apk/*
 
 COPY ./php.ini /usr/local/etc/php/php.ini
